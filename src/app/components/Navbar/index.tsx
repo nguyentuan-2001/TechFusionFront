@@ -90,7 +90,7 @@ export default function Navbar() {
               color="#fff"
               fontSize={0.7}
             />
-            <Box sx={{ ml: 2 }}>
+            <Box sx={{ ml: 2, display:'flex', flexDirection: 'column' }}>
               <ButtonStyle>Chính sách</ButtonStyle>
               <ButtonStyle>Tuyển dụng</ButtonStyle>
             </Box>
@@ -132,17 +132,15 @@ export default function Navbar() {
             ))}
           </DivGrid>
         </Container>
-        
       </div>
     </Box>
   );
 }
 
-const styleContainer = {
+export const styleContainer = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  minWidth: "1024px",
   overflow: "auto",
   background: "#0d1527",
   height: "80px",
@@ -154,13 +152,14 @@ const ButtonStyle = styled.button`
   color: #fff;
   border-radius: 20px;
   border: none;
-  padding: 8px 20px;
+  padding: 8px 10px;
   margin: 2px 0;
+  width: 100px;
 `;
 
 const DivGrid = styled.div`
   display: grid;
-  grid-template-columns: 18% repeat(3, 1fr);
+  grid-template-columns: 200px repeat(3, 1fr);
   /* gap: 10px; */
   width: 100%;
 

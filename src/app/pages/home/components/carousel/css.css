@@ -1,0 +1,30 @@
+.custom-prev-button,
+.custom-next-button {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.custom-prev-button > svg,
+.custom-next-button > svg {
+  font-size: 40px;
+  color: #fff;
+
+  &:hover{
+    color: gray;
+  }
+}
+
+.custom-prev-button {
+  left: 10px; 
+}
+
+.custom-next-button {
+  right: 10px; 
+}
+li:has(.div_li_ca){
+    width: 100% !important;
+}
