@@ -17,7 +17,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Path from "../../../../../config/clientPath";
 
-export const Sidebar = () => {
+export const Sidebar = (props: any) => {
+  const { slider } = props;
   const datasidebar = [
     {
       icon1: <LaptopMacIcon fontSize={"medium"} />,
@@ -82,11 +83,11 @@ export const Sidebar = () => {
   ];
 
   const [selectedKey, setSelectedKey] = useState<number>();
-  const [openSidebarChild, setOpenSidebarChild] = useState<boolean>(false);
+  const [openSidebarChild, setOpenSidebarChild] = useState<string>("false");
 
   const openSideChild = (index: number) => {
     setSelectedKey(index);
-    setOpenSidebarChild(true);
+    setOpenSidebarChild("true");
   };
 
   return (
@@ -109,7 +110,7 @@ export const Sidebar = () => {
         </Box>
 
         <Box width={"65%"} p={2}>
-          <CarouselOneImg />
+          <CarouselOneImg data={slider} height="310px"/>
         </Box>
         <StyleBoxAddress>
           <StyleAddress>
@@ -131,9 +132,9 @@ export const Sidebar = () => {
             ))}
           </StyleAddress>
         </StyleBoxAddress>
-        <SideBarHover show={openSidebarChild}>
+        <SideBarHover shownone={openSidebarChild}>
           <HeaderSidebar>
-            <button onClick={() => setOpenSidebarChild(false)}>
+            <button onClick={() => setOpenSidebarChild("false")}>
               <CloseIcon />
             </button>
           </HeaderSidebar>
@@ -148,13 +149,15 @@ export const Sidebar = () => {
           ))}
         </SideBarHover>
       </Container>
-      <Container sx={{ mx: "0 10px"}}>
-        <Box sx={{ display: "flex", gap: "10px",justifyContent: 'space-between' }}>
+      <Container sx={{ mx: "0 10px" }}>
+        <Box
+          sx={{ display: "flex", gap: "10px", justifyContent: "space-between" }}
+        >
           <Link to={Path.DETAILS} style={StyleBoderImage}>
             <img
               src="https://img.meta.com.vn/Data/image/2021/09/29/anh-binh-minh-1.jpg"
               alt="ảnh"
-              height='100%'
+              height="100%"
               width="100%"
             />
           </Link>
@@ -162,7 +165,7 @@ export const Sidebar = () => {
             <img
               src="https://img.meta.com.vn/Data/image/2021/09/29/anh-binh-minh-1.jpg"
               alt="ảnh"
-              height='100%'
+              height="100%"
               width="100%"
             />
           </Link>
@@ -170,7 +173,7 @@ export const Sidebar = () => {
             <img
               src="https://img.meta.com.vn/Data/image/2021/09/29/anh-binh-minh-1.jpg"
               alt="ảnh"
-              height='100%'
+              height="100%"
               width="100%"
             />
           </Link>
@@ -206,14 +209,16 @@ const ButtonStyle = styled.button`
   width: 100%;
 `;
 
-const SideBarHover = styled(Box)<{ show: boolean }>`
+const SideBarHover = styled(Box)<{ shownone: string }>`
   background: #fff;
   position: absolute;
   width: 50%;
   height: 325px;
   z-index: 2;
   margin-left: 200px;
-  display: ${(props) => (props.show ? "block" : "none")};
+  visibility: ${(props) => (props.shownone === "true" ? "visible" : "hidden")};
+  opacity: ${(props) => (props.shownone === "true" ? 1 : 0)};
+  transition: opacity 0.3s ease-in-out;
 `;
 
 const HeaderSidebar = styled(Box)`
@@ -238,9 +243,9 @@ const HeaderSidebar = styled(Box)`
   }
 `;
 
-const StyleBoderImage={
-    flex: "0 0 calc(33.33% - 10px)" ,
-    borderTop: '3px solid #fd7e14',
-    borderLeft: '3px solid #fd7e14',
-    height:'165px'
-}
+const StyleBoderImage = {
+  flex: "0 0 calc(33.33% - 10px)",
+  borderTop: "3px solid #fd7e14",
+  borderLeft: "3px solid #fd7e14",
+  height: "165px",
+};

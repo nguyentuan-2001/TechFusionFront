@@ -1,9 +1,12 @@
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 
 import { Box, Container, Typography } from "@mui/material";
-import { CarouselComponent } from "../carousel";
+import { CarouselComponent, ICarousel } from "../carousel";
+import { useEffect, useState } from "react";
 
-export const FlashSale = () => {
+export const FlashSale = (props: any) => {
+  const { data } = props;
+
   return (
     <>
       <Container sx={{ mx: "0 10px" }}>
@@ -16,7 +19,7 @@ export const FlashSale = () => {
             <FlashOnIcon sx={{ fontSize: "40px" }} /> FLASH SALE
           </Typography>
 
-          <CarouselComponent height="200" />
+          <CarouselComponent height="200px" data={data} />
 
           <Typography
             variant="h6"

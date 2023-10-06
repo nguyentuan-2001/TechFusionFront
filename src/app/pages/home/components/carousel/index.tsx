@@ -17,26 +17,30 @@ import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import styled from "styled-components";
 import CountdownTimer from "../countdowntimer";
 
-interface ICarousel {
-  images?: any;
-  height?: string;
-  name?: string;
-  gift?: string;
-  price?: number;
-  old_price?: number;
+export interface ICarousel {
+  product_image?: string;
+  product_name?: string;
+  product_desc?: string;
+  product_price?: number;
+  product_sale?: number;
+  slider_name?: string;
+  slider_image?: string;
+  slider_status?: string;
+}
+interface IDataCarousel {
+  height: string;
+  data: ICarousel[];
 }
 
-export const CarouselOneImg = () => {
-  const images = [
-    "https://d1hjkbq40fs2x4.cloudfront.net/2017-08-21/files/landscape-photography_1645.jpg",
-    "https://d1hjkbq40fs2x4.cloudfront.net/2017-08-21/files/landscape-photography_1645.jpg",
-    "https://d1hjkbq40fs2x4.cloudfront.net/2017-08-21/files/landscape-photography_1645.jpg",
-    "https://ik.imagekit.io/tvlk/blog/2021/09/du-lich-anh-8-1024x576.jpg?tr=dpr-2,w-675",
-    "https://d1hjkbq40fs2x4.cloudfront.net/2017-08-21/files/landscape-photography_1645.jpg",
-  ];
-  const items = images.map((image, index) => (
+export const CarouselOneImg = ({ height, data }: IDataCarousel) => {
+  const items = data.map((item, index) => (
     <div key={index} className="div_li_ca">
-      <img src={image} alt={`Image ${index + 1}`} height={310} width={"100%"} />
+      <img
+        src={item.slider_image}
+        alt={`Image ${index + 1}`}
+        height={height}
+        width={"100%"}
+      />
     </div>
   ));
 
@@ -63,9 +67,9 @@ export const CarouselOneImg = () => {
   return (
     <AliceCarousel
       items={items}
-      // autoPlay
-      // autoPlayInterval={3000}
-      // infinite
+      autoPlay
+      autoPlayInterval={3000}
+      infinite
       renderPrevButton={renderPrevButton}
       renderNextButton={renderNextButton}
       disableDotsControls={true}
@@ -83,92 +87,51 @@ export function truncateText(text: any, maxLength: number) {
   }
   return text;
 }
-function formatPrice(price: number) {
+export function formatPrice(price: number) {
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
   }).format(price);
 }
 
-// {
-//   images,
-//   height,
-//   name,
-//   gift,
-//   price,
-//   old_price,
-// }: ICarousel
-
-export const CarouselComponent = ({ height }: ICarousel) => {
-  const images = [
-    {
-      image:
-        "https://d1hjkbq40fs2x4.cloudfront.net/2017-08-21/files/landscape-photography_1645.jpg",
-      name: "iphone",
-      gift: "1 chiếc cặp",
-      price: 2000000,
-      old_price: 4000000,
-    },
-    {
-      image:
-        "https://ik.imagekit.io/tvlk/blog/2021/09/du-lich-anh-8-1024x576.jpg?tr=dpr-2,w-675",
-      name: "iphone",
-      gift: "1 chiếc cặp",
-      price: 2000000,
-      old_price: 4000000,
-    },
-    {
-      image:
-        "https://d1hjkbq40fs2x4.cloudfront.net/2017-08-21/files/landscape-photography_1645.jpg",
-      name: "iphone",
-      gift: "1 chiếc cặp",
-      price: 2000000,
-      old_price: 4000000,
-    },
-    {
-      image:
-        "https://ik.imagekit.io/tvlk/blog/2021/09/du-lich-anh-8-1024x576.jpg?tr=dpr-2,w-675",
-      name: "iphone",
-      gift: "1 chiếc cặp",
-      price: 2000000,
-      old_price: 4000000,
-    },
-  ];
-
+export const CarouselComponent = ({ height, data }: IDataCarousel) => {
   const responsive = {
     0: { items: 1 },
     768: { items: 3 },
     1024: { items: 4 },
   };
 
-  const items = images.map((item, index) => (
+  const items = data.map((item, index) => (
     <Card key={index} sx={{ mx: 1 }}>
       <CardActionArea>
         <CardMedia
           component="img"
           height={height}
-          image={item.image}
-          alt="green iguana"
+          image={item?.product_image}
+          alt={`Image ${index + 1}`}
+          sx={{margin:'auto', width:'auto', py:2}}
         />
         <CardContent>
           <Typography gutterBottom variant="h6" component="div" align="center">
-            {item.name}
+            {item.product_name}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{my:2}}>
-            {truncateText(item.gift, 30)}
+          <Typography variant="body2" color="text.secondary" sx={{ my: 2 }}>
+            {truncateText(item.product_desc, 30)}
           </Typography>
           <Typography
             variant="body2"
             component="div"
             align="center"
-            sx={{ textDecoration: "line-through" }}
+            sx={{ textDecoration: "line-through", fontSize: "1rem" }}
           >
-            {formatPrice(item.old_price)}
+            {formatPrice(
+              ((item?.product_price || 0) / 100) * (item?.product_sale || 0)
+            )}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-        <ButtonStyle>{formatPrice(item.price)}</ButtonStyle>
+        <ButtonStyle>{formatPrice(item?.product_price || 0)}</ButtonStyle>
       </CardActions>
       <Box sx={StyleBoxTime}>
         Kết thúc sau: <CountdownTimer days={7} />
@@ -210,7 +173,7 @@ export const CarouselComponent = ({ height }: ICarousel) => {
   );
 };
 
-const ButtonStyle = styled.button`
+export const ButtonStyle = styled.button`
   background: #3699ff;
   color: #fff;
   border-radius: 30px;
