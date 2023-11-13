@@ -28,7 +28,7 @@ export const HomeComponent = () => {
         const result = await response.json();
         setData(result);
 
-        const dataslider = await fetch('http://127.0.0.1:8000/api/slider');
+        const dataslider = await fetch('http://127.0.0.1:8000/api/sliders');
         const sliderjson = await dataslider.json();
         setSlider(sliderjson);
 

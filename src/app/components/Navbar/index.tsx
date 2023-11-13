@@ -20,6 +20,8 @@ import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 import styled from "styled-components";
 import { ButtonIcon } from "../ButtonIcon";
+import { Link } from "react-router-dom";
+import Path from "../../../config/clientPath";
 
 const imglogo = require("../../images/logo1.png");
 
@@ -40,13 +42,10 @@ export default function Navbar() {
       <AppBar position="static" sx={{ flexGrow: 1, background: "#0d1527" }}>
         <Toolbar>
           <Container sx={styleContainer}>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ display: "flex", alignContent: "center" }}
-            >
+            <Link to={Path.HOME}>
               <img src={imglogo} width="70px" />
-            </Typography>
+            </Link>
+
             <Paper
               component="form"
               sx={{
@@ -90,7 +89,7 @@ export default function Navbar() {
               color="#fff"
               fontSize={0.7}
             />
-            <Box sx={{ ml: 2, display:'flex', flexDirection: 'column' }}>
+            <Box sx={{ ml: 2, display: "flex", flexDirection: "column" }}>
               <ButtonStyle>Chính sách</ButtonStyle>
               <ButtonStyle>Tuyển dụng</ButtonStyle>
             </Box>
@@ -207,7 +206,7 @@ const DivAnimation = styled.div`
 const DivSpan = styled.span`
   font-size: 0.8rem;
   cursor: pointer;
-  &:hover{
+  &:hover {
     color: #3699ff;
   }
 `;
