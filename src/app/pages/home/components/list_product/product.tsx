@@ -29,20 +29,19 @@ export interface IProduct {
   };
 }
 interface IDataProduct {
-  height: string;
   data: IProduct[];
 }
 
-export const CardProduct = ({ height, data }: IDataProduct) => {
+export const CardProduct = ({ data }: IDataProduct) => {
   return (
     <Box sx={{ display: "flex" }}>
       {data.slice(0, 5).map((item, index) => (
-        <Card sx={{ mx: 0.5, p: 1 }} key={index}>
+        <Card sx={{ mx: 0.5, p: "10px", maxWidth: "205px" }} key={index}>
           <CardMedia
             component="img"
-            height={height}
             image={item.product_image}
             alt="green iguana"
+            sx={{ height: "205px", width: "205px" }}
           />
           <CardContent sx={{ p: 0 }}>
             <Typography
@@ -50,8 +49,14 @@ export const CardProduct = ({ height, data }: IDataProduct) => {
               variant="body1"
               component="div"
               align="center"
+              sx={{
+                fontSize: "14px",
+                fontWeight: "550",
+                cursor: "pointer",
+                mt: "5px",
+              }}
             >
-              {item.product_name}
+              {truncateText(item.product_name, 45)}
             </Typography>
             {item.product_status === 1 ? (
               <StyleType color1="#AED2FF" color2="#3699ff">
@@ -70,35 +75,35 @@ export const CardProduct = ({ height, data }: IDataProduct) => {
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   CPU
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   RAM
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   Ổ cứng
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   Card
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   Màn hình
                 </Typography>
@@ -107,55 +112,77 @@ export const CardProduct = ({ height, data }: IDataProduct) => {
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   {item.product_detail?.product_cpu}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   {item.product_detail?.product_ram}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   {item.product_detail?.hard_drive}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   {item.product_detail?.product_card}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ my: 0.8, fontSize:'0.8rem' }}
+                  sx={{ my: 0.8, fontSize: "0.8rem" }}
                 >
                   {item.product_detail?.desktop}
                 </Typography>
               </Box>
             </Box>
 
-            <Typography
-              variant="body2"
-              component="div"
-              align="center"
-              sx={{ textDecoration: "line-through", fontSize: "1rem" }}
-            >
-              {formatPrice(
-                ((item?.product_price || 0) / 100) * (item?.product_sale || 0)
-              )}
-            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography
+                variant="body2"
+                component="div"
+                align="center"
+                sx={{ textDecoration: "line-through", fontSize: "1rem" }}
+              >
+                {formatPrice(item.product_price || 0)}
+              </Typography>
+              <Box
+                sx={{
+                  background: "#d00012",
+                  px: "3px",
+                  py: "1",
+                  color: "white",
+                  borderRadius: "5px",
+                  ml: "5px",
+                  fontSize: "11px",
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  wordWrap: "break-word",
+                }}
+              >
+                -{item?.product_sale || 0}%
+              </Box>
+            </Box>
           </CardContent>
 
           <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-            <ButtonStyle>{formatPrice(item.product_price || 0)}</ButtonStyle>
+            <ButtonStyle>
+              {formatPrice(
+                (item?.product_price || 0) -
+                  ((item?.product_price || 0) / 100) * (item?.product_sale || 0)
+              )}
+            </ButtonStyle>
           </CardActions>
         </Card>
       ))}
@@ -167,6 +194,7 @@ const StyleType = styled.span<{ color1: string; color2: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   color: white;
   padding: 5px;
   border-radius: 15px;

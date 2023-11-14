@@ -33,7 +33,7 @@ export const ListProduct = (props: any) => {
                 Xem tất cả
               </StyleTypography>
             </Box>
-            <CardProduct height="200" data={data} />
+            <CardProduct data={data} />
           </Box>
         ))}
       </Container>

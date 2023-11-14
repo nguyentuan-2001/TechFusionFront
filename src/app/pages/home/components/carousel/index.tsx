@@ -183,6 +183,7 @@ export const ButtonStyle = styled.button`
   font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
+  min-width: 150px;
 `;
 
 const StyleBoxTime = {
